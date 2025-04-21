@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct TaskView: View {
+struct TaskDetail: View {
     @State var title = ""
     @Environment(\.dismiss) var dismiss
     
     var addTask: (String) -> Void = {_ in }
+    var updateTask: (String) -> Void = {_ in }
     
     var body: some View {
         NavigationStack {
@@ -22,6 +23,7 @@ struct TaskView: View {
             .navigationBarItems(
                 trailing: Button(action: {
                     addTask(title)
+                    updateTask(title)
                     dismiss()
                 }) {
                     Text("Done")
@@ -33,5 +35,5 @@ struct TaskView: View {
 }
 
 #Preview {
-    TaskView()
+    TaskDetail()
 }

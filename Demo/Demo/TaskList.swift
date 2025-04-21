@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TaskListScreen: View {
+struct TaskList: View {
     
     @State var tasks = [
         
@@ -22,12 +22,18 @@ struct TaskListScreen: View {
         NavigationStack {
             List {
                 
-                ForEach(tasks) { task in
+                ForEach(tasks.indices, id: \.self) { index in
                     NavigationLink(destination: {
-                        TaskView(title: task.title)
+                        TaskDetail(
+                            title: tasks[index].title,
+                            addTask: {_ in },
+                            updateTask: { title in
+                                tasks[index].title = title
+                            }
+                        )
                     }) {
-                        Text(task.title)
-
+                        Text(tasks[index].title)
+                        
                     }
                 }
                 
@@ -47,10 +53,16 @@ struct TaskListScreen: View {
                     }
             )
             .sheet(isPresented: $showForm) {
-                TaskView { title in
-                    tasks.append(
-                        Task(title: title, isCompleted: false))
-                }
+                TaskDetail(
+                    addTask: { title in
+                        tasks.append(
+                            Task(title: title, isCompleted: false))
+                    },
+                    updateTask: {_ in }
+                    
+                )
+                
+                
             }
             
         }
@@ -60,5 +72,5 @@ struct TaskListScreen: View {
 }
 
 #Preview {
-    TaskListScreen()
+    TaskList()
 }
