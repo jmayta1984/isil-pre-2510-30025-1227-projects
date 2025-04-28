@@ -8,8 +8,8 @@
 import Foundation
 
 class ContactListViewModel: ObservableObject {
-    //@Published var contacts = [Contact]()
-    @Published var contacts = [Contact(name: "Luis", phone: "123", company: "ISIL")]
+    @Published var contacts = [Contact]()
+    //@Published var contacts = [Contact(name: "Luis", phone: "123", company: "ISIL")]
     func addContact(contact: Contact) {
         contacts.append(contact)
     }
