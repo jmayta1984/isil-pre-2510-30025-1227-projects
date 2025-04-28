@@ -34,6 +34,7 @@ struct ContactListView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
+                        selectedContact = nil
                         showContactDetail = true
                     }) {
                         Image(systemName: "plus")

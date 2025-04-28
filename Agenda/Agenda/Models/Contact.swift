@@ -7,7 +7,7 @@
 import Foundation
 
 struct Contact: Identifiable {
-    let id: UUID = UUID()
+    let id: UUID
     let name: String
     let phone: String
     let company: String

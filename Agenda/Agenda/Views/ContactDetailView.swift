@@ -15,24 +15,34 @@ struct ContactDetailView: View {
     
     var editingContact: Contact?
     
+    var title: String {
+        editingContact == nil ? "New contact" : "Edit contact"
+    }
+    
     @ObservedObject var viewModel: ContactListViewModel
     
     var body: some View {
         NavigationStack {
             Form {
-                Section (header: Text("Information")) {
+                Section  {
                     TextField("Name", text: $name)
                     TextField("Phone", text: $phone)
                     TextField("Company", text: $company)
                     
                 }
             }
-            .navigationTitle(Text("New contact"))
+            .navigationTitle(title)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        let contact = Contact(name: name, phone: phone, company: company)
-                        viewModel.addContact(contact: contact)
+                        let id = editingContact?.id ?? UUID()
+                        let contact = Contact(id: id,
+                                              name: name,
+                                              phone: phone,
+                                              company: company)
+                        
+                        viewModel.saveContact(contact: contact, editing: editingContact != nil)
+                        
                         dismiss()
                     }) {
                         Text("Save")
