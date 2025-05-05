@@ -21,9 +21,24 @@ struct TaskDao {
     
     func addTask(title: String) {
         let task = Task(context: context)
+        task.id = UUID()
         task.title = title
         saveContext()
         
+    }
+    
+    func updateTask(title: String, id: UUID) {
+        let request: NSFetchRequest<Task> = Task.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        do {
+            if let entity = try context.fetch(request).first {
+                entity.title = title
+                saveContext()
+            }
+        } catch (let error) {
+            print(error)
+            
+        }
     }
     
     func deleteTask(task: Task) {

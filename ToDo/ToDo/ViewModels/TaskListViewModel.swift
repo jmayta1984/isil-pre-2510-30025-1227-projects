@@ -24,4 +24,11 @@ class TaskListViewModel: ObservableObject {
         taskDao.deleteTask(task: task)
         fetchTasks()
     }
+    
+    func updateTask(title: String, id: UUID?) {
+        if let id = id {
+            taskDao.updateTask(title: title, id: id)
+            fetchTasks()
+        }
+    }
 }

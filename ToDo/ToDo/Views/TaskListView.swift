@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TaskListView: View {
     @StateObject var viewModel = TaskListViewModel()
+    @State var selectedTask: Task? = nil
+    @State var showDetail: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -16,6 +18,9 @@ struct TaskListView: View {
             List {
                 ForEach(viewModel.tasks) { task in
                     Text(task.title ?? "")
+                        .onTapGesture {
+                            selectedTask = task
+                        }
                 }
                 .onDelete { indexSet in
                     if let index = indexSet.first {
@@ -28,8 +33,8 @@ struct TaskListView: View {
                 ToolbarItem {
                     Button(
                         action: {
-                            viewModel.addTask(title: "Hi")
-                            
+                            selectedTask = nil
+                            showDetail = true
                         }) {
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
@@ -37,6 +42,16 @@ struct TaskListView: View {
                         }
                 }
             }
+            .sheet(item: $selectedTask, content: { task in
+                TaskDetailView(editingTask: task) { title in
+                    viewModel.updateTask(title: title, id: selectedTask?.id)
+                }
+            })
+            .sheet(isPresented: $showDetail, content: {
+                TaskDetailView(editingTask: selectedTask) { title in
+                    viewModel.addTask(title: title)
+                }
+            })
             .onAppear {
                 viewModel.fetchTasks()
             }
