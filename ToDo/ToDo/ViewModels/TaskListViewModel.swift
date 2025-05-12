@@ -12,11 +12,13 @@ class TaskListViewModel: ObservableObject {
     let taskDao = TaskDao()
     
     func fetchTasks() {
-        tasks = taskDao.fetchTasks()
+        tasks = taskDao.fetchTasks().map({ entity in
+            Task (id: entity.id ?? UUID(), title: entity.title ?? "", createdAt: entity.createdAt ?? Date(), dueDate: entity.dueDate ?? Date())
+        })
     }
     
-    func addTask(title: String) {
-        taskDao.addTask(title: title)
+    func addTask(task: Task) {
+        taskDao.addTask(task: task)
         fetchTasks()
     }
     
@@ -25,10 +27,9 @@ class TaskListViewModel: ObservableObject {
         fetchTasks()
     }
     
-    func updateTask(title: String, id: UUID?) {
-        if let id = id {
-            taskDao.updateTask(title: title, id: id)
-            fetchTasks()
-        }
+    func updateTask(task: Task) {
+        taskDao.updateTask(task: task)
+        fetchTasks()
+        
     }
 }

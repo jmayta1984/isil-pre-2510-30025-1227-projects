@@ -43,13 +43,13 @@ struct TaskListView: View {
                 }
             }
             .sheet(item: $selectedTask, content: { task in
-                TaskDetailView(editingTask: task) { title in
-                    viewModel.updateTask(title: title, id: selectedTask?.id)
+                TaskDetailView(editingTask: task) { it in
+                    viewModel.updateTask(task: it)
                 }
             })
             .sheet(isPresented: $showDetail, content: {
-                TaskDetailView(editingTask: selectedTask) { title in
-                    viewModel.addTask(title: title)
+                TaskDetailView(editingTask: selectedTask) { it in
+                    viewModel.addTask(task: it)
                 }
             })
             .onAppear {

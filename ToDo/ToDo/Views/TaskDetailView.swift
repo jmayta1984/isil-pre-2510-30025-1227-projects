@@ -18,7 +18,7 @@ struct TaskDetailView: View {
         editingTask != nil ? "Update task" : "New task"
     }
     
-    var onSave: (String) -> Void = {_ in}
+    var onSave: (Task) -> Void = {_ in}
   
     var body: some View {
         NavigationStack {
@@ -27,12 +27,16 @@ struct TaskDetailView: View {
                 Section {
                     TextField("Title", text: $viewModel.title)
                         .textInputAutocapitalization(.never)
+                    DatePicker("Due date",
+                               selection: $viewModel.dueDate,
+                               in: Date()...,
+                               displayedComponents: [.date])
                 }
                 
                 Section {
                     Button(action: {
-                        if viewModel.validate() {
-                            onSave(viewModel.title)
+                        if let task = viewModel.validate(id: editingTask?.id) {
+                            onSave(task)
                             dismiss()
                         }
                     }) {
@@ -47,7 +51,8 @@ struct TaskDetailView: View {
             .navigationTitle(title)
             .onAppear {
                 if let task = editingTask {
-                    viewModel.title = task.title ?? ""
+                    viewModel.title = task.title
+                    viewModel.dueDate = task.dueDate
                 }
             }
         }

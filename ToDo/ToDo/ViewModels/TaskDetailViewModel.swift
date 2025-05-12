@@ -8,17 +8,18 @@ import Foundation
 
 class TaskDetailViewModel: ObservableObject {
     @Published var title = ""
+    @Published var dueDate = Date()
     @Published var errorMessage: String?
     
-    func validate() -> Bool {
+    func validate(id: UUID?) -> Task? {
         
         guard !title.isEmpty else {
             errorMessage = "Empty title"
-            return false
+            return nil
         }
         
         errorMessage = nil
-        return true
+        return Task(id: id ?? UUID(), title: title, createdAt: Date(), dueDate: dueDate)
         
     }
 }

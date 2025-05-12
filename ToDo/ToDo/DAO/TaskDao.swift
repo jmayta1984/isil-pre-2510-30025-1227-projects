@@ -9,8 +9,8 @@ import CoreData
 struct TaskDao {
     private let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
     
-    func fetchTasks() -> [Task] {
-        let request: NSFetchRequest<Task> = Task.fetchRequest()
+    func fetchTasks() -> [TaskEntity] {
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
          do {
              return try context.fetch(request)
          } catch (let error) {
@@ -19,20 +19,23 @@ struct TaskDao {
          }
     }
     
-    func addTask(title: String) {
-        let task = Task(context: context)
-        task.id = UUID()
-        task.title = title
+    func addTask(task: Task) {
+        let taskEntity = TaskEntity(context: context)
+        taskEntity.id = task.id
+        taskEntity.title = task.title
+        taskEntity.createdAt = task.createdAt
+        taskEntity.dueDate = task.dueDate
         saveContext()
         
     }
     
-    func updateTask(title: String, id: UUID) {
-        let request: NSFetchRequest<Task> = Task.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+    func updateTask(task: Task) {
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
         do {
             if let entity = try context.fetch(request).first {
-                entity.title = title
+                entity.title = task.title
+                entity.dueDate = task.dueDate
                 saveContext()
             }
         } catch (let error) {
@@ -42,8 +45,16 @@ struct TaskDao {
     }
     
     func deleteTask(task: Task) {
-        context.delete(task)
-        saveContext()
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
+        do {
+            if let entity = try context.fetch(request).first {
+                context.delete(entity)
+                saveContext()
+            }
+        } catch let error {
+            print(error)
+        }
     }
     
     private func saveContext() {
