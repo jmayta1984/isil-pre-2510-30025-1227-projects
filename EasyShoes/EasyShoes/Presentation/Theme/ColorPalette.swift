@@ -9,4 +9,5 @@ import SwiftUI
 
 enum ColorPalette {
     static let primary = Color.brandPrimary
+    static let background = Color.gray.opacity(0.1)
 }

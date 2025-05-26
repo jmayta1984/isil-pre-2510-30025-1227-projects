@@ -19,11 +19,11 @@ struct LoginView: View {
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                     .padding()
-                    .background(.gray.opacity(0.1))
+                    .background(ColorPalette.background)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 SecureField("Password", text: $password)
                     .padding()
-                    .background(.gray.opacity(0.1))
+                    .background(ColorPalette.background)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 Button(action: {}) {
                     Text("Sign in")
