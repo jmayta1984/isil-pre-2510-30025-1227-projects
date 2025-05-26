@@ -13,18 +13,18 @@ struct LoginView: View {
     
     var body: some View {
         NavigationStack {
-            VStack (spacing: 16){
+            VStack (spacing: UIConstants.spacingDefault){
                 TextField("Email", text: $email)
                     .keyboardType(.emailAddress)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                     .padding()
                     .background(ColorPalette.background)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusSmall))
                 SecureField("Password", text: $password)
                     .padding()
                     .background(ColorPalette.background)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusSmall))
                 Button(action: {}) {
                     Text("Sign in")
                 }
@@ -32,7 +32,7 @@ struct LoginView: View {
                 .frame(maxWidth: .infinity)
                 .background(ColorPalette.primary)
                 .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusButton))
                 
                 Button(action: {}) {
                     Text("Sign up")
