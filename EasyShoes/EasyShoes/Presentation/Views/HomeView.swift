@@ -13,52 +13,57 @@ struct HomeView: View {
     
     let genders = ["All", "Men", "Women", "Kids"]
     @State var selectedGender = "All"
+    @StateObject var viewModel = HomeViewModel()
     
     var body: some View {
-        VStack (spacing: UIConstants.spacingDefault){
-            
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.gray )
-                TextField("Search", text: $search)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
-            }
-            .padding()
-            .background(ColorPalette.background)
-            .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusSmall))
-            
-            Banner()
-            
-            ScrollView (.horizontal) {
+        ScrollView {
+            VStack (spacing: UIConstants.spacingDefault){
+                
                 HStack {
-                    ForEach(genders, id: \.self) { gender in
-                        Text(gender)
-                            .padding(.horizontal, UIConstants.paddingLarge)
-                            .padding(.vertical, UIConstants.paddingDefault)
-                            .background(gender == selectedGender ? ColorPalette.primary : .white)
-                            .foregroundStyle(gender == selectedGender ? .white : .gray)
-                            .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusDefault))
-                            .overlay {
-                                RoundedRectangle(cornerRadius: UIConstants.cornerRadiusDefault)
-                                    .stroke(gender == selectedGender ? ColorPalette.primary : .gray, lineWidth: 1)
-                            }
-                            .onTapGesture {
-                                selectedGender = gender
-                            }
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.gray )
+                    TextField("Search", text: $search)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+                }
+                .padding()
+                .background(ColorPalette.background)
+                .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusSmall))
+                
+                Banner()
+                
+                ScrollView (.horizontal) {
+                    HStack {
+                        ForEach(genders, id: \.self) { gender in
+                            Text(gender)
+                                .padding(.horizontal, UIConstants.paddingLarge)
+                                .padding(.vertical, UIConstants.paddingDefault)
+                                .background(gender == selectedGender ? ColorPalette.primary : .white)
+                                .foregroundStyle(gender == selectedGender ? .white : .gray)
+                                .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusDefault))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: UIConstants.cornerRadiusDefault)
+                                        .stroke(gender == selectedGender ? ColorPalette.primary : .gray, lineWidth: 1)
+                                }
+                                .onTapGesture {
+                                    selectedGender = gender
+                                }
+                        }
                     }
                 }
-            }
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                ForEach(genders, id: \.self) { gender in
-                    Text(gender)
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                    ForEach(viewModel.shoes) { shoe in
+                        ShoeCardView(shoe: shoe)
+                    }
                 }
-            }
+                    
+                Spacer()
                 
-            Spacer()
-            
+            }
+            .padding(UIConstants.paddingDefault)
+
         }
-        .padding(UIConstants.paddingDefault)
+        
         
         
         
