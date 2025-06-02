@@ -1,0 +1,13 @@
+//
+//  UIState.swift
+//  EasyShoes
+//
+//  Created by Alumno on 2/06/25.
+//
+
+enum UIState<T> {
+    case idle
+    case loading
+    case success(T)
+    case failure(String)
+}

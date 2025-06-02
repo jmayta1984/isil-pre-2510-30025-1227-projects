@@ -15,12 +15,14 @@ struct ShoeCardView: View {
             AsyncImage(url: URL(string: shoe.image)) { image in
                 image
                     .resizable()
-                    .scaledToFit()
+                    .frame(height: UIConstants.imageSizeSmall)
             } placeholder: {
                 ProgressView()
+                    .frame(height: UIConstants.imageSizeSmall)
             }
             
             Text(shoe.name)
+                .lineLimit(1)
                 .font(.headline)
                 .bold()
             

@@ -29,6 +29,13 @@ struct ShoeResponse: Identifiable, Decodable {
 }
 
 struct ShoeSizeResponse: Decodable {
-    let size: Int
+    let size: Double
     let quantity: Int
+}
+
+extension ShoeResponse {
+    func toDomain() -> Shoe {
+        Shoe(id: id, name: name, brand: brand, gender: gender, category: category, price: price, image: image)
+    }
+    
 }

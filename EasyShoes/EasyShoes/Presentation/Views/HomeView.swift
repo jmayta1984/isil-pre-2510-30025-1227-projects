@@ -51,9 +51,19 @@ struct HomeView: View {
                         }
                     }
                 }
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                    ForEach(viewModel.shoes) { shoe in
-                        ShoeCardView(shoe: shoe)
+           
+                switch viewModel.state {
+                case .idle, .loading:
+                    ProgressView("Loading")
+                case .success(let shoes):
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                        ForEach(shoes) { shoe in
+                            ShoeCardView(shoe: shoe)
+                        }
+                    }
+                case .failure(let message):
+                    VStack {
+                        Text("Error: \(message)")
                     }
                 }
                     
