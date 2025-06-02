@@ -28,6 +28,13 @@ struct ShoeResponse: Identifiable, Decodable {
     
 }
 
+enum ShoeGender: String, CaseIterable, Codable {
+    case all = "All"
+    case men = "MEN"
+    case women = "WOMEN"
+    case kids = "KIDS"
+}
+
 struct ShoeSizeResponse: Decodable {
     let size: Double
     let quantity: Int
@@ -35,7 +42,7 @@ struct ShoeSizeResponse: Decodable {
 
 extension ShoeResponse {
     func toDomain() -> Shoe {
-        Shoe(id: id, name: name, brand: brand, gender: gender, category: category, price: price, image: image)
+        Shoe(id: id, name: name, brand: brand.capitalizedFirstLetter(), gender: gender, category: category, price: price, image: image)
     }
     
 }
