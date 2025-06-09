@@ -67,7 +67,6 @@ struct HomeView: View {
                     }
                 }
                     
-                Spacer()
                 
             }
             .padding(UIConstants.paddingDefault)

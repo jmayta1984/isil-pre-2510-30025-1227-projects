@@ -67,6 +67,9 @@ struct LoginView: View {
             }, message: {
                 Text(alertMessage)
             })
+            .navigationDestination(item: $user) { user in
+                ContentView(user: user)
+            }
         }
     }
 }
