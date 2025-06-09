@@ -30,6 +30,20 @@ struct ContentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
                     Text(user.name).font(.caption)
+                    AsyncImage(url: URL(string: user.image)) { image in
+                        image
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        ProgressView()
+                            .frame(width: 20, height: 20)
+                    }
+                    .overlay {
+                        Circle()
+                            .stroke(lineWidth: 1)
+                            .foregroundStyle(ColorPalette.primary)
+                    }
                 }
                 
             }
