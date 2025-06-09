@@ -52,7 +52,6 @@ class HttpRequestHelper {
             
             // Validar que la respuesta sea success (200)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print(response?.url)
                 completion(data, "Error: HTTP request failed")
                 return
             }
