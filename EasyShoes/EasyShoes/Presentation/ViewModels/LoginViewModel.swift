@@ -10,14 +10,20 @@ import Foundation
 class LoginViewModel: ObservableObject {
     
     @Published var state: UIState<User> = .idle
-    
+
     @Published var username = ""
     @Published var password = ""
     
     func login() {
         state = .loading
-        
-        
+        AuthService().login(username: username, password: password) { user, message  in
+            DispatchQueue.main.async {
+                if let user = user {
+                    self.state = .success(user)
+                } else {
+                    self.state = .failure(message ?? "Unknow error")
+                }
+            }
+        }
     }
-    
 }

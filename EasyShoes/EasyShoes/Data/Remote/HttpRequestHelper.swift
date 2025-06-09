@@ -22,6 +22,8 @@ class HttpRequestHelper {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         // Crear el cuerpo de la solicitud
         do {
            let requestBody = try JSONEncoder().encode(body)
@@ -50,6 +52,7 @@ class HttpRequestHelper {
             
             // Validar que la respuesta sea success (200)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print(response?.url)
                 completion(data, "Error: HTTP request failed")
                 return
             }
