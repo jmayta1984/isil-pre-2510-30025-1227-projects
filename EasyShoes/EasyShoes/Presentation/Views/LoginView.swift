@@ -8,31 +8,32 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var email = ""
-    @State var password = ""
+    @StateObject var viewModel = LoginViewModel()
     
     var body: some View {
         NavigationStack {
             VStack (spacing: UIConstants.spacingDefault){
-                TextField("Email", text: $email)
-                    .keyboardType(.emailAddress)
+                TextField("Username", text: $viewModel.username)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                     .padding()
                     .background(ColorPalette.background)
                     .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusSmall))
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $viewModel.password)
                     .padding()
                     .background(ColorPalette.background)
                     .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusSmall))
-                Button(action: {}) {
+                Button(action: {
+                    viewModel.login()
+                }) {
                     Text("Sign in")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(ColorPalette.primary)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusButton))
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(ColorPalette.primary)
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: UIConstants.cornerRadiusButton))
+                
                 
                 Button(action: {}) {
                     Text("Sign up")
