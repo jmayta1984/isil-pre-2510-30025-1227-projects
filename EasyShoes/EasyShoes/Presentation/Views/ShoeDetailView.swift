@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ShoeDetailView: View {
     let shoe: Shoe
+    
+    @State var selectedSize: ShoeSize? = nil
+    
     var body: some View {
         VStack (alignment:.leading, spacing: UIConstants.spacingSmall){
             ZStack (alignment: .topTrailing){
@@ -41,14 +44,42 @@ struct ShoeDetailView: View {
                     .bold()
                 Spacer()
                 Text(String(format: "$ %i", shoe.price))
-                    .font(.title3)
+                    .font(.headline)
                     .bold()
             }
             
             Text(shoe.brand)
                 .font(.subheadline)
             
+            Text(shoe.description)
+                .font(.subheadline)
 
+            Text("Sizes")
+                .font(.headline)
+                .bold()
+            
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(shoe.sizes, id: \.self.size) { size in
+                        Text(size.size)
+                            .font(.subheadline)
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(size == selectedSize ? .white : .gray)
+                            .background(size == selectedSize ? Color.brandPrimary : .white)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .onTapGesture {
+                                selectedSize = size
+                            }
+                    }
+                }
+            }
+            
+            if let size = selectedSize {
+                Text("Stock: \(size.stock) ")
+                    .font(.caption)
+
+            }
+            
             Spacer()
             Button {
                 

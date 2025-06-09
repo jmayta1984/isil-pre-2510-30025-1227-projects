@@ -55,7 +55,3 @@ struct ShoeCardView: View {
         }
     }
 }
-
-#Preview {
-    ShoeCardView(shoe: Shoe(id: 1, name: "Adidas Samba", brand: "Adidas", gender: "", category: "", price: 200, image: "https://www.hustgt.com/cdn/shop/products/Tenis_Samba_OG_Blanco_BB6975_01_standard-removebg--triangle.png"))
-}

@@ -28,7 +28,7 @@ class ShoeService {
             }
             
             do {
-                let shoes = try JSONDecoder().decode([ShoeResponse].self, from: data).map { shoeResponse in
+                let shoes = try JSONDecoder().decode([ShoeDTO].self, from: data).map { shoeResponse in
                     shoeResponse.toDomain()
                 }
                 completion(shoes, nil)

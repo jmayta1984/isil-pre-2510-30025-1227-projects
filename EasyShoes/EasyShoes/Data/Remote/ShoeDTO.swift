@@ -5,7 +5,7 @@
 //  Created by Alumno on 2/06/25.
 //
 
-struct ShoeResponse: Identifiable, Decodable {
+struct ShoeDTO: Identifiable, Decodable {
     let id: Int
     let name: String
     let brand: String
@@ -13,7 +13,8 @@ struct ShoeResponse: Identifiable, Decodable {
     let category: String
     let price: Int
     let image: String
-    let sizes: [ShoeSizeResponse]
+    let sizes: [ShoeSizeDTO]
+    let description: String
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,25 +25,24 @@ struct ShoeResponse: Identifiable, Decodable {
         case price
         case image
         case sizes = "sizes_available"
+        case description
     }
     
 }
 
-enum ShoeGender: String, CaseIterable, Codable {
-    case all = "All"
-    case men = "MEN"
-    case women = "WOMEN"
-    case kids = "KIDS"
-}
-
-struct ShoeSizeResponse: Decodable {
+struct ShoeSizeDTO: Decodable {
     let size: Double
     let quantity: Int
+    
+    func toDomain() -> ShoeSize {
+        ShoeSize(size: "\(size)", stock: quantity)
+    }
 }
 
-extension ShoeResponse {
+extension ShoeDTO {
     func toDomain() -> Shoe {
-        Shoe(id: id, name: name, brand: brand.capitalizedFirstLetter(), gender: gender, category: category, price: price, image: image)
+        Shoe(id: id, name: name, brand: brand.capitalizedFirstLetter(), gender: gender, category: category, price: price, image: image, description: description, sizes: sizes.map({ $0.toDomain() })
+        )
     }
     
 }

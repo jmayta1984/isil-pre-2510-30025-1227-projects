@@ -11,8 +11,8 @@ class LoginViewModel: ObservableObject {
     
     @Published var state: UIState<User> = .idle
 
-    @Published var username = ""
-    @Published var password = ""
+    @Published var username = "emilys"
+    @Published var password = "emilyspass"
     
     func login() {
         state = .loading
