@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FavoriteShoe {
+struct FavoriteShoe: Identifiable {
     let id: Int
     let name: String
     let image: String

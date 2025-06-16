@@ -23,7 +23,9 @@ struct FavoritesView: View {
                 ForEach(favorites) { favorite in
                     FavoriteShoeCardView(favorite: favorite)
                 }
+                .listRowSeparator(.hidden)
             }
+            .listStyle(.plain)
         }
     }
     
