@@ -11,7 +11,11 @@ struct FavoriteShoeCardView: View {
     @State var showSizes = false
     @State var showOptions = false
     
+    @StateObject var viewModel = FavoriteShoeCardViewModel()
+    
     let favorite: FavoriteShoe
+    let onDelete: () -> Void
+
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: favorite.image)) { phase in
@@ -33,7 +37,7 @@ struct FavoriteShoeCardView: View {
             }
             
             VStack(alignment: .leading) {
-                Text(favorite.name).font(.headline)
+                Text(favorite.name).font(.subheadline).bold().lineLimit(1)
                 Text("$ \(favorite.price)").font(.subheadline)
                 Button {
                     showSizes = true
@@ -87,7 +91,9 @@ struct FavoriteShoeCardView: View {
                 }
                 
                 Button {
-                    
+                    viewModel.removeFavorite(id: favorite.id)
+                    showOptions = false
+                    onDelete()
                 } label: {
                     Label("Remove from favorites", systemImage: "trash")
                         .frame(maxWidth: .infinity, alignment: .leading)
