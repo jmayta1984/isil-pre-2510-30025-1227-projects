@@ -61,9 +61,9 @@ struct HomeView: View {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                         ForEach(shoes) { shoe in
                             ShoeCardView(shoe: shoe)
-                                .onTapGesture {
-                                    selectedShoe = shoe
-                                }
+                            .onTapGesture {
+                                selectedShoe = shoe
+                            }
                         }
                     }
                 case .failure(let message):
@@ -76,7 +76,9 @@ struct HomeView: View {
             }
             .padding(UIConstants.paddingDefault)
             .sheet(item: $selectedShoe) { shoe in
-                ShoeDetailView(shoe: shoe)
+                ShoeDetailView(shoe: shoe) {
+                    viewModel.getShoes()
+                }
             }
 
         }

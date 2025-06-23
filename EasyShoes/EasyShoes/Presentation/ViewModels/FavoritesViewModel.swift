@@ -9,7 +9,7 @@ import Foundation
 
 class FavoritesViewModel: ObservableObject {
     @Published var favorites = [FavoriteShoe]()
-    private let dao = FavoriteShoeDAO()
+    private let dao = FavoriteShoeDAO.shared
     
     func getAllFavorites() {
         favorites = dao.fetchAllFavorites()

@@ -10,8 +10,11 @@ import SwiftUI
 struct ShoeDetailView: View {
     let shoe: Shoe
     
+    let onToggle: () -> Void
+    
     @State var selectedSize: ShoeSize? = nil
     @StateObject var viewModel = ShoeDetailViewModel()
+    
     
     var body: some View {
         VStack (alignment:.leading, spacing: UIConstants.spacingSmall){
@@ -29,7 +32,7 @@ struct ShoeDetailView: View {
                 }
                 Button {
                     viewModel.toggleFavorite(shoe: shoe)
-                    print(viewModel.isFavorite)
+                    onToggle()
                 } label: {
                     Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
                         .resizable()

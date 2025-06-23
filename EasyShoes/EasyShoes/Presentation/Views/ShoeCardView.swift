@@ -10,11 +10,14 @@ import SwiftUI
 struct ShoeCardView: View {
     let shoe: Shoe
     
+    @StateObject var viewModel = ShoeCardViewModel()
+        
     var body: some View {
         VStack (alignment:.leading, spacing: UIConstants.spacingSmall){
             AsyncImage(url: URL(string: shoe.image)) { image in
                 image
                     .resizable()
+                    .scaledToFill()
                     .frame(height: UIConstants.imageSizeSmall)
             } placeholder: {
                 ProgressView()
@@ -35,9 +38,9 @@ struct ShoeCardView: View {
                     .bold()
                 Spacer()
                 Button {
-                    
+                    viewModel.toggleFavorite(shoe: shoe)
                 } label: {
-                    Image(systemName: "heart")
+                    Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: UIConstants.iconSize, height: UIConstants.iconSize)
                         .foregroundStyle(ColorPalette.primary)
@@ -52,6 +55,9 @@ struct ShoeCardView: View {
             RoundedRectangle(cornerRadius: UIConstants.cornerRadiusCard)
                 .stroke(lineWidth: 2)
                 .foregroundStyle(ColorPalette.background)
+        }
+        .onAppear {
+            viewModel.checkFavorite(id: shoe.id)
         }
     }
 }

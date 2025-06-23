@@ -1,14 +1,16 @@
 //
-//  ShoeDetailViewModel.swift
+//  ShoeCardViewMode;.swift
 //  EasyShoes
 //
-//  Created by Alumno on 16/06/25.
+//  Created by Alumno on 23/06/25.
 //
 
 import Foundation
-class ShoeDetailViewModel: ObservableObject {
-    let dao = FavoriteShoeDAO.shared
-    @Published var isFavorite = false
+
+class ShoeCardViewModel: ObservableObject {
+    @Published var isFavorite: Bool = false
+    private let dao = FavoriteShoeDAO.shared
+    
     
     func checkFavorite(id: Int) {
         isFavorite = dao.checkFavorite(id: id)
@@ -32,4 +34,5 @@ class ShoeDetailViewModel: ObservableObject {
         
         dao.insertFavorite(favorite: FavoriteShoe(id: shoe.id, name: shoe.name, image: shoe.image, price: shoe.price))
     }
+    
 }

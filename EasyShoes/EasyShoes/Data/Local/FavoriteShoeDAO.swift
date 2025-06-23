@@ -8,6 +8,11 @@
 import CoreData
 
 class FavoriteShoeDAO {
+    
+    static let shared = FavoriteShoeDAO()
+    
+    private init () {}
+    
     private let context = PersistenceController.shared.container.viewContext
     
     func insertFavorite(favorite: FavoriteShoe){

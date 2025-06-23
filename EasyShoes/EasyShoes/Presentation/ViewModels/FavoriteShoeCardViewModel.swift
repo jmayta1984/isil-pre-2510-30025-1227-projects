@@ -8,10 +8,10 @@
 import Foundation
 
 class FavoriteShoeCardViewModel: ObservableObject {
-    let dao = FavoriteShoeDAO()
+    let dao = FavoriteShoeDAO.shared
     
     func removeFavorite(id: Int) {
         dao.deleteFavorite(id: id)
     }
-    
+
 }
