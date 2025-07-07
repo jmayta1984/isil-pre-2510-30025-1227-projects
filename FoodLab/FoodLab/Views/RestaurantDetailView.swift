@@ -12,37 +12,76 @@ struct RestaurantDetailView: View {
     @State var showDetail = false
     
     var body: some View {
-        VStack {
-            GoogleMapView(latitude: restaurant.latitude, longitude: restaurant.longitude, zoom: 15, title: restaurant.title, subTitle: restaurant.address)
-         
+        ZStack (alignment: .bottom){
             
-        }
-        .onAppear {
-            showDetail = true
-        }
-        .sheet(isPresented: $showDetail) {
-            VStack {
-                AsyncImage(url: URL(string: restaurant.poster)) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 200)
-                            .frame(maxWidth: .infinity)
-                        
-                    case .failure(let error):
-                        Text(error.localizedDescription)
-                    @unknown default:
-                        EmptyView()
+            GoogleMapView(
+                latitude: restaurant.latitude,
+                longitude: restaurant.longitude,
+                zoom: 15,
+                title: restaurant.title,
+                subTitle: restaurant.address)
+            
+            VStack (spacing: 10){
+                Text(restaurant.title)
+                    .font(.title2)
+                    .bold()
+                Text(restaurant.address)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                HStack (spacing: 5) {
+                    Image(systemName: "star.fill")
+                    Text(String(format: "%.1f", restaurant.rating))
+                        .font(.subheadline)
+                }
+                
+                
+                if showDetail {
+                    AsyncImage(url: URL(string: restaurant.poster)) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .frame(height: 200)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(height: 200)
+                                .frame(maxWidth: .infinity)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            
+                        case .failure:
+                            Color.gray
+                                .frame(height: 200)
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                    Text(restaurant.description)
+                        .font(.body)
+                        .foregroundStyle(.primary)
+                        .padding(.top, 5)
+                }
+                
+                Button(showDetail ? "Hide" : "Show more") {
+                    withAnimation {
+                        showDetail.toggle()
                     }
                 }
+                .font(.subheadline)
+                .foregroundStyle(.primary)
+                .bold()
+                
             }
-            .presentationDetents([.height(120)])
-        
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+
+            
+            
         }
+        .edgesIgnoringSafeArea(.all)
+
         
     }
 }

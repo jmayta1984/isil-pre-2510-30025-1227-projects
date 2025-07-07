@@ -10,8 +10,9 @@ import GoogleMaps
 class GoogleMapHelper {
     static let shared = GoogleMapHelper()
     
+    // TODO: API KEY HERE
     private init () {
-        GMSServices.provideAPIKey("AIzaSyDhaqChbGH5l2bYrj1NvTjZw8AlSP_Me-w")
+        GMSServices.provideAPIKey("YOUR API KEY HERE")
     }
     
 }
