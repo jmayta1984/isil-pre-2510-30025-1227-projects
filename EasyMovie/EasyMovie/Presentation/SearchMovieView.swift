@@ -17,6 +17,8 @@ struct SearchMovieView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.gray)
                 TextField("Search movie", text: $query)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                     .onSubmit {
                         viewModel.searchMovies(query: query)
                     }

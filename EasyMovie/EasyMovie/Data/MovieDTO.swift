@@ -7,7 +7,7 @@
 
 struct MoviesDTO: Decodable {
     
-    let movies: [MoviesDTO]
+    let movies: [MovieDTO]
     
     enum CodingKeys: String, CodingKey {
         case movies = "results"
