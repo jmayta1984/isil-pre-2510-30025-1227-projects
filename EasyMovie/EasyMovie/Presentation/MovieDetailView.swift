@@ -10,6 +10,9 @@ import SwiftUI
 struct MovieDetailView: View {
     let movie: Movie
     
+    @State var isFavorite = false
+    @EnvironmentObject var viewModel: SearchMovieViewModel
+    
     var body: some View {
         VStack {
             ZStack (alignment: .bottomTrailing){
@@ -37,9 +40,10 @@ struct MovieDetailView: View {
                     }
                 }
                 Button {
-                    
+                    viewModel.toggleFavorite(movie: movie)
+                    isFavorite.toggle()
                 } label: {
-                    Image(systemName: "heart")
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundStyle(.black)
@@ -61,6 +65,10 @@ struct MovieDetailView: View {
             .padding()
            
             Spacer()
+        }
+        .onAppear {
+            isFavorite = viewModel.isFavorite(id: movie.id)
+            
         }
     }
 }

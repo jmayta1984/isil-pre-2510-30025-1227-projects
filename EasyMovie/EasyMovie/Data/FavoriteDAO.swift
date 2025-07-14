@@ -71,4 +71,18 @@ class FavoriteDAO {
         }
     }
     
+    func isFavorite(id: Int) -> Bool {
+        let fetchRequest: NSFetchRequest<FavoriteEntity>
+        fetchRequest = FavoriteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: " id = %i", argumentArray: [id])
+        
+        do {
+            let entities = try context.fetch(fetchRequest)
+            return !entities.isEmpty
+            
+        } catch let error {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
 }

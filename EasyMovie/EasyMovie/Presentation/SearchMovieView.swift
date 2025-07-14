@@ -65,6 +65,7 @@ struct SearchMovieView: View {
         .sheet(item: $selectedMovie) { movie in
             MovieDetailView(movie: movie)
         }
+        .environmentObject(viewModel)
     }
 }
 

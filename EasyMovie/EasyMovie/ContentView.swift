@@ -14,7 +14,7 @@ struct ContentView: View {
                 SearchMovieView()
             }
             Tab("Favorites", systemImage: "heart") {
-                
+                FavoriteListView()
             }
         }
         .tint(.black)

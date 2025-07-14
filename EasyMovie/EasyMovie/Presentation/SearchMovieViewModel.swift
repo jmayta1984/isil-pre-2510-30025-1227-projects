@@ -29,4 +29,20 @@ class SearchMovieViewModel: ObservableObject {
         }
     }
     
+    func toggleFavorite(movie: Movie) {
+        let dao = FavoriteDAO.shared
+        
+        if (dao.isFavorite(id: movie.id)){
+            dao.deleteFavorite(id: movie.id)
+        } else {
+            dao.insertFavorite(movie: movie)
+        }
+    }
+    
+    func isFavorite(id: Int) -> Bool {
+        let dao = FavoriteDAO.shared
+
+        return dao.isFavorite(id: id)
+    }
+    
 }
