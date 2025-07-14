@@ -9,17 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationStack {
-            TabView {
-                Tab("Search", systemImage: "magnifyingglass") {
-                    SearchMovieView()
-                }
-                Tab("Favorites", systemImage: "heart") {
-                    
-                }
+        TabView {
+            Tab("Search", systemImage: "magnifyingglass") {
+                SearchMovieView()
+            }
+            Tab("Favorites", systemImage: "heart") {
+                
             }
         }
-        .padding()
+        .tint(.black)
+      
     }
 }
 

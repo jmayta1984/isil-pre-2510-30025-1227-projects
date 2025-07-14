@@ -9,6 +9,10 @@ import Foundation
 
 class MovieService {
     
+    static let shared = MovieService()
+    
+    private init() {}
+    
     let url = "https://api.themoviedb.org/3/search/movie?api_key=0fb2259dc60130bd85acb07069f8bb0d&query="
     
     func searchMovie(query: String, completion: @escaping([Movie]?, String?) -> Void) {

@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct SearchMovieView: View {
-    @StateObject var viewModel = MovieListViewModel()
-    @State var query = ""
+    @StateObject var viewModel = SearchMovieViewModel()
+
+    @State var selectedMovie: Movie? = nil
     
     var body: some View {
         VStack {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.gray)
-                TextField("Search movie", text: $query)
+                TextField("Search movie", text: $viewModel.query)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                     .onSubmit {
-                        viewModel.searchMovies(query: query)
+                        viewModel.searchMovies()
                     }
             }
             .padding()
@@ -29,7 +30,9 @@ struct SearchMovieView: View {
             
             switch viewModel.uiState {
             case .initialState:
+                
                 Spacer()
+                
             case .loadingState:
                 VStack {
                     Spacer()
@@ -41,14 +44,26 @@ struct SearchMovieView: View {
                 List {
                     ForEach(movies) { movie in
                         MovieListItemView(movie: movie)
-                            .listRowInsets(EdgeInsets())
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
                             .listRowSeparator(.hidden)
+                            .onTapGesture {
+                                selectedMovie = movie
+                            }
                     }
                 }
                 .listStyle(.plain)
-            case .failureState:
-                Spacer()
+            case .failureState(let message):
+                VStack {
+                    Spacer()
+                    Text(message)
+                    Spacer()
+                }
+                
             }
+        }
+        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+        .sheet(item: $selectedMovie) { movie in
+            MovieDetailView(movie: movie)
         }
     }
 }
